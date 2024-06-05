@@ -4,22 +4,19 @@
 using namespace std;
 
 //最长（可不连续）下降子序列问题
-//给定一个长度为k的序列，求它的一个最长的子序列的长度，使得这个子序列是下降的。
-//例如，给定序列1 7 3 5 9 4 8，一个最长的下降子序列是1 7 5 4，长度为4。
 //使用动态规划解决
 int longestDecreasingSubsequence(vector<int> nums) {
     int n = nums.size();
     int maxNum = 1;
     vector<int> dp(n, 1);
-    for (int i = 1; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            if (nums[j] >= nums[i]) {
-                dp[i] = max(dp[i], dp[j] + 1);
+    for(int i=n-1;i>=0;i--){
+        for(int j=i+1;j<n;j++){
+            if(nums[i]>=nums[j]){
+                dp[i]=max(dp[i],dp[j]+1);
             }
         }
-        if (dp[i] > maxNum) {
-            maxNum = dp[i];
-        }
+        maxNum=max(maxNum,dp[i]);
+
     }
     return maxNum;
 }
